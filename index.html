@@ -81,11 +81,11 @@ button{
   outline:5px solid white;
 }
 
-.miseo{ background:#7fd67f; }
-.solim{ background:#ffd95f; color:#7a5a00; }
-.esther{ background:#ff8dc7; }
-.hyeyeon{ background:#7fdcff; }
-.hasle{ background:#c69bff; }
+.miseo{ background:#222; }
+.solim{ background:#222; }
+.esther{ background:#222; }
+.hyeyeon{ background:#222; }
+.hasle{ background:#222; }
 
 .calendar-start-btn{
   width:100%;
@@ -126,6 +126,26 @@ button{
 }
 
 /* 시간표 */
+/* 색상 선택 */
+.color-picker{
+  display:flex;
+  gap:12px;
+  margin-bottom:22px;
+  flex-wrap:wrap;
+}
+
+.color-btn{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  border:4px solid white;
+  box-shadow:0 4px 10px rgba(0,0,0,0.15);
+}
+
+.color-btn.selected-color{
+  outline:3px solid #ff5f9e;
+}
+
 .schedule-container{
   background:white;
   border-radius:24px;
@@ -254,6 +274,19 @@ button{
     class="date-input"
   >
 
+  <div class="section-title">🎨 캘린더 색상 선택</div>
+
+  <div class="color-picker">
+
+    <button class="color-btn" data-color="#7fd67f" style="background:#7fd67f"></button>
+    <button class="color-btn" data-color="#ffd95f" style="background:#ffd95f"></button>
+    <button class="color-btn" data-color="#ff8dc7" style="background:#ff8dc7"></button>
+    <button class="color-btn" data-color="#7fdcff" style="background:#7fdcff"></button>
+    <button class="color-btn" data-color="#c69bff" style="background:#c69bff"></button>
+    <button class="color-btn" data-color="#ffb3c7" style="background:#ffb3c7"></button>
+
+  </div>
+
   <!-- 시간표 -->
   <div class="schedule-container" id="scheduleContainer">
   </div>
@@ -306,13 +339,32 @@ let selectedUser = '';
 let viewingUser = '';
 let finalMode = false;
 
+const colorButtons = document.querySelectorAll('.color-btn');
+
 const userColors = {
-  '미서':'#7fd67f',
-  '소림':'#ffd95f',
+  '미서':'#ff8dc7',
+  '소림':'#ff8dc7',
   '에스더':'#ff8dc7',
-  '혜연':'#7fdcff',
-  '하슬':'#c69bff'
+  '혜연':'#ff8dc7',
+  '하슬':'#ff8dc7'
 };
+
+/* 색상 선택 */
+colorButtons.forEach(btn=>{
+
+  btn.addEventListener('click',()=>{
+
+    colorButtons.forEach(b=>b.classList.remove('selected-color'));
+
+    btn.classList.add('selected-color');
+
+    userColors[selectedUser] = btn.dataset.color;
+
+    renderSchedule();
+
+  });
+
+});
 
 const schedules = {
   '미서': new Array(48).fill(false),
@@ -334,6 +386,10 @@ nameButtons.forEach(btn=>{
     selectedUser = btn.dataset.name;
 
     viewingUser = selectedUser;
+
+    document.querySelector('.selected-color')?.classList.remove('selected-color');
+
+    colorButtons[2].classList.add('selected-color');
 
   });
 
@@ -384,7 +440,7 @@ function renderSchedule(){
       }
 
       if(count>=2){
-        slot.style.background='#8b5e3c';
+        slot.style.background
       }
 
     }else{
@@ -463,3 +519,4 @@ finalBtn.addEventListener('click',()=>{
 
 </body>
 </html>
+
