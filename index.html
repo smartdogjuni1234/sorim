@@ -369,6 +369,17 @@ const userColors = {
   '하슬':'#ff8dc7'
 };
 
+const savedColors = localStorage.getItem('ugaColors');
+
+if(savedColors){
+
+  Object.assign(
+    userColors,
+    JSON.parse(savedColors)
+  );
+
+}
+
 /* 색상 선택 */
 colorButtons.forEach(btn=>{
 
@@ -379,6 +390,10 @@ colorButtons.forEach(btn=>{
     btn.classList.add('selected-color');
 
     userColors[selectedUser] = btn.dataset.color;
+    localStorage.setItem(
+  'ugaColors',
+  JSON.stringify(userColors)
+);
 
     renderSchedule();
 
@@ -386,12 +401,16 @@ colorButtons.forEach(btn=>{
 
 });
 
-const schedules = {
-  '미서': new Array(48).fill(false),
-  '소림': new Array(48).fill(false),
-  '에스더': new Array(48).fill(false),
-  '혜연': new Array(48).fill(false),
-  '하슬': new Array(48).fill(false)
+const savedSchedules = localStorage.getItem('ugaSchedules');
+
+const schedules = savedSchedules
+? JSON.parse(savedSchedules)
+: {
+    '미서': new Array(48).fill(false),
+    '소림': new Array(48).fill(false),
+    '에스더': new Array(48).fill(false),
+    '혜연': new Array(48).fill(false),
+    '하슬': new Array(48).fill(false)
 };
 
 /* 이름 선택 */
@@ -404,6 +423,10 @@ nameButtons.forEach(btn=>{
     btn.classList.add('selected');
 
     selectedUser = btn.dataset.name;
+    localStorage.setItem(
+  'ugaSelectedUser',
+  selectedUser
+);
 
     viewingUser = selectedUser;
 
@@ -477,6 +500,10 @@ function renderSchedule(){
       if(finalMode) return;
 
       schedules[selectedUser][i] = !schedules[selectedUser][i];
+      localStorage.setItem(
+  'ugaSchedules',
+  JSON.stringify(schedules)
+);
 
       renderSchedule();
       updateChecks();
@@ -560,6 +587,18 @@ dateInput.addEventListener('input',()=>{
   );
 
 });
+
+const lastUser = localStorage.getItem(
+  'ugaSelectedUser'
+);
+
+if(lastUser){
+
+  selectedUser = lastUser;
+
+  viewingUser = lastUser;
+
+}
 
 </script>
 
