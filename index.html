@@ -224,6 +224,18 @@ button{
   height:30px;
 }
 
+.reset-btn{
+  width:100%;
+  padding:18px;
+  border-radius:24px;
+  background:#ff9fc4;
+  color:white;
+  font-size:20px;
+  font-weight:bold;
+  margin-top:14px;
+  box-shadow:0 8px 18px rgba(0,0,0,0.15);
+}
+
 </style>
 </head>
 
@@ -337,12 +349,17 @@ button{
     최종 시간 보기 🤎
   </button>
 
+  <button class="reset-btn" id="resetBtn">
+  새로운 여행 ✨
+</button>
+
   <div class="bottom-space"></div>
 
 </div>
 
 <script>
-
+  
+const resetBtn = document.getElementById('resetBtn');
 const mainScreen = document.getElementById('mainScreen');
 const calendarScreen = document.getElementById('calendarScreen');
 const startBtn = document.getElementById('startBtn');
@@ -599,6 +616,22 @@ if(lastUser){
   viewingUser = lastUser;
 
 }
+
+resetBtn.addEventListener('click',()=>{
+
+  const result = confirm(
+    '새로운 여행일정을 잡으시겠습니까?'
+  );
+
+  if(result){
+
+    localStorage.clear();
+
+    location.reload();
+
+  }
+
+});
 
 </script>
 
