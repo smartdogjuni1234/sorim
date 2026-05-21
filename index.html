@@ -276,18 +276,20 @@ button{
 
   <div class="section-title">✈ 여행 제목</div>
 
-  <input
-    type="text"
-    class="trip-input"
-    placeholder="예: 제주도 여행"
-  >
+<input
+  type="text"
+  class="trip-input"
+  id="tripInput"
+  placeholder="예: 제주도 여행"
+>
 
   <div class="section-title">📅 날짜</div>
 
-  <input
-    type="date"
-    class="date-input"
-  >
+<input
+  type="date"
+  class="date-input"
+  id="dateInput"
+>
 
   <div class="section-title">🎨 캘린더 색상 선택</div>
 
@@ -347,6 +349,9 @@ const startBtn = document.getElementById('startBtn');
 const scheduleContainer = document.getElementById('scheduleContainer');
 const finalBtn = document.getElementById('finalBtn');
 
+  const tripInput = document.getElementById('tripInput');
+const dateInput = document.getElementById('dateInput');
+  
 const nameButtons = document.querySelectorAll('.name-btn');
 const userTabs = document.querySelectorAll('.user-tab');
 
@@ -527,6 +532,32 @@ finalBtn.addEventListener('click',()=>{
   finalMode = true;
 
   renderSchedule();
+
+});
+
+/* 저장된 제목 불러오기 */
+tripInput.value = localStorage.getItem('tripTitle') || '';
+
+/* 저장된 날짜 불러오기 */
+dateInput.value = localStorage.getItem('tripDate') || '';
+
+/* 제목 저장 */
+tripInput.addEventListener('input',()=>{
+
+  localStorage.setItem(
+    'tripTitle',
+    tripInput.value
+  );
+
+});
+
+/* 날짜 저장 */
+dateInput.addEventListener('input',()=>{
+
+  localStorage.setItem(
+    'tripDate',
+    dateInput.value
+  );
 
 });
 
